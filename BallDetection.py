@@ -17,7 +17,7 @@ fourcc = cv2.VideoWriter_fourcc(*'mp4v')
 out = cv2.VideoWriter(output_file, fourcc, fps, (frame_width, frame_height))
 
 # load a pre-trained yolov8n model
-model = get_model(model_id="moving-pickleball/3", api_key="ilhpCy5yCMhZbEGSzaOV")
+model = get_model(model_id="moving-pickleball/3", api_key="Iuzy6U3O9RSmPobUEquD")
 
 # create supervision annotators
 bounding_box_annotator = sv.BoxAnnotator()
