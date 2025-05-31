@@ -37,7 +37,7 @@ def callback(frame: np.ndarray, _: int) -> np.ndarray:
 
 # Process the video with tracking
 sv.process_video(
-    source_path="bosse.mp4",
+    source_path="samples/bosse.mp4",
     target_path="result.mp4",
     callback=callback
 )
