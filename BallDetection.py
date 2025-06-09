@@ -12,7 +12,7 @@ cap = cv2.VideoCapture(video_file)
 ball_positions = []
 
 # Define ROI size
-roi_size = 300
+roi_size = 250
 # Define initial ROI position (you can adjust these coordinates as needed)
 roi_x = 640  # center x-coordinate
 roi_y = 360  # center y-coordinate
@@ -36,7 +36,7 @@ while cap.isOpened():
                    roi_x - roi_size//2:roi_x + roi_size//2]
         print("running tracker")
         # Run YOLO tracking only on the ROI
-        results = model.track(roi, conf=0.4, persist=True, tracker="ball_tracker.yaml")
+        results = model.track(roi, conf=0.3, persist=True, tracker="ball_tracker.yaml")
         print("ran tracker")
         # Get the annotated ROI
         annotated_roi = results[0].plot()
