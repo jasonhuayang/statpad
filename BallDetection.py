@@ -4,7 +4,7 @@ import cv2
 import numpy as np
 
 video_file = "samples/point2.mp4"  # replace with your video file path
-model = YOLO('training/weights/best.pt')
+model = YOLO('training/weights/best2.pt')
 cap = cv2.VideoCapture(video_file)
 
 # Get video dimensions

@@ -1,6 +1,6 @@
-train: ball_detection/ball_detection/train/images
-val: ball_detection/ball_detection/valid/images
-test: ball_detection/ball_detection/test/images
+train: train/images
+val: valid/images
+test: test/images
 
 nc: 1
 names: ['Pickleball']
