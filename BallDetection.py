@@ -4,7 +4,7 @@ import cv2
 import numpy as np
 
 video_file = "samples/point2.mp4"  # replace with your video file path
-model = YOLO('training/weights/best2.pt')
+model = YOLO('weights/best2.pt')
 cap = cv2.VideoCapture(video_file)
 
 # Get video dimensions
@@ -14,8 +14,8 @@ frame_height = int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
 # Array to store ball coordinates for each frame
 ball_positions = []
 
-# Define ROI size parameters
-base_roi_size = 320  # base size of ROI
+# Define ROI size parametersq
+base_roi_size = 640  # base size of ROI
 roi_size = base_roi_size
 min_roi_size = 200   # minimum ROI size
 max_roi_size = 800   # maximum ROI size
@@ -24,18 +24,6 @@ distance_scale = 1.0 # how much to scale ROI based on distance
 # Define initial ROI position (will be updated with first detection)
 roi_x = 800  # center x-coordinate
 roi_y = 460  # center y-coordinate
-
-# Find initial ball detection
-
-# Reset video capture to start
-cap.set(cv2.CAP_PROP_POS_FRAMES, 0)
-
-# Store last detection for distance calculation
-last_detection = None
-# Counter for consecutive missed detections
-missed_detections = 0
-# Growth rate for ROI when ball is not found
-missed_growth_rate = 1.0
 
 while cap.isOpened():
     # Read a frame from the video
@@ -60,7 +48,7 @@ while cap.isOpened():
                    roi_x - roi_size//2:roi_x + roi_size//2]
         print("running tracker")
         # Run YOLO tracking only on the ROI
-        results = model.predict(roi, conf=0.3, tracker="ball_tracker.yaml")
+        results = model.predict(roi, conf=0.2, tracker="ball_tracker.yaml")
         print("ran tracker")
         # Get the annotated ROI
         annotated_roi = results[0].plot()
@@ -85,20 +73,6 @@ while cap.isOpened():
                 roi_x = int(global_x)
                 roi_y = int(global_y)
                 last_detection = (global_x, global_y)
-                
-                # Reset ROI size and missed detections counter when ball is found
-                if missed_detections > 0:
-                    roi_size = base_roi_size
-                    print(f"Ball found! Resetting ROI size to {base_roi_size}")
-                missed_detections = 0
-                break  # Only take the first detection if multiple exist
-        else:
-            # Increment missed detections counter
-            missed_detections += 1
-            # Increase ROI size based on consecutive misses
-            if missed_detections > 0:
-                roi_size = min(max_roi_size, int(roi_size * missed_growth_rate))
-                print(f"Missed detection {missed_detections}, increasing ROI size to {roi_size}")
 
         ball_positions.append(frame_position)
         
